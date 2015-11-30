@@ -34,8 +34,8 @@ static void service_example()
     fflush(stdout);
     int canary = time(NULL)%420+69;
 
-    char cmd[5];
-    fgets(cmd, 3, stdin);
+    char cmd[1];
+    fgets(cmd, 1, stdin);
     if (cmd[0] == 'R')
         read_note(canary);
     else if (cmd[0] == 'W') {
@@ -136,7 +136,6 @@ static void initialize_offset() {
 
 int main()
 {
-    io_example();
     service_example();
     return 0;
 }
