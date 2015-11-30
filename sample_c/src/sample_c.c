@@ -106,7 +106,7 @@ static void write_note()
     printf("Please type: note_id password content\n");
     printf("The note_id is an number. No extra whitespace!\n");
     fflush(stdout);
-    if (scanf("%u %50s %50s", &note_id, password, content) != 3) {
+    if (scanf("%u %50s %512s", &note_id, password, content) != 3) {
         string_out("Can't parse your stuff!\n");
         return;
     }
