@@ -25,7 +25,7 @@ def set_flag(ip, port, flag):
     c.sendline("W")
 
     c.expect("Please type: twit_id password content")
-    c.expect("The twit_id is a number. No extra whitespace! Content must be less than 144 characters (Welcome to Tweety Bird).")
+    c.expect("The twit_id is a number. No extra whitespace! Content must be less than 144 characters \(Welcome to Tweety Bird\).")
     c.sendline("{} {} {}".format(note_id, password, content))
 
     c.expect("Your note is safe with us! Bye!")
