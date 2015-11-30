@@ -21,11 +21,13 @@ def benign(ip, port):
 
     conn = socket.create_connection((ip,port))
     c = pexpect.fdpexpect.fdspawn(conn.fileno())
-    c.expect("Yo! Welcome to the secret Twitter, Tweety Bird.")
+    c.expect("Twee! Welcome to the secret Twitter, Tweety Bird.")
+    c.expect("You are.*Facebook")
     c.expect("Want to \(R\)ead or \(W\)rite a twit?")
     c.sendline("W")
     c.expect("Please type: twit_id password content")
-    c.expect("The twit_id is a number. No extra whitespace! Content must be less than 144 characters (Welcome to Tweety Bird).")
+    #c.expect("The twit_id is a number. No extra whitespace! Content must be less than 144 characters (Welcome to Tweety Bird).")
+    c.expect("The twit_id is a number. No extra whitespace! Content must be less than 144 characters \(Welcome to Tweety Bird\).")
     c.sendline("{} {} {}".format(note_id, password, content))
     c.expect("Your note is safe with us! Bye!")
     c.close()
@@ -36,8 +38,8 @@ def benign(ip, port):
         if wrong_password != password: break
     conn = socket.create_connection((ip,port))
     c = pexpect.fdpexpect.fdspawn(conn.fileno())
-    c.expect("Yo! Welcome to the secret Twitter, Tweety Bird.")
-    c.expect("Want to \(R\)ead or \(W\)rite a note?")
+    c.expect("Twee! Welcome to the secret Twitter, Tweety Bird.")
+    c.expect("Want to \(R\)ead or \(W\)rite a twit?")
     c.sendline("R")
     c.expect("Please type: twit_id password");
     c.sendline("{} {}".format(note_id, wrong_password))
@@ -47,8 +49,8 @@ def benign(ip, port):
     
     conn = socket.create_connection((ip,port))
     c = pexpect.fdpexpect.fdspawn(conn.fileno())
-    c.expect("Yo! Welcome to the secret Twitter, Tweety Bird.")
-    c.expect("Want to \(R\)ead or \(W\)rite a note?")
+    c.expect("Twee! Welcome to the secret Twitter, Tweety Bird.")
+    c.expect("Want to \(R\)ead or \(W\)rite a twit?")
     c.sendline("R")
     c.expect("Please type: twit_id password")
     c.sendline("{} {}".format(note_id, password))
