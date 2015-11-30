@@ -1,5 +1,8 @@
 #include <stdio.h>
 #include <stdint.h>
+#include <stdlib.h>
+#include <sys/ptrace.h>
+#include <time.h>
 #include "utils.h"
 
 
@@ -59,7 +62,12 @@ static void service_example()
     printf("Hi! Welcome to our note storage service\n");
     printf("Want to (R)ead or (W)rite a note?\n");
     fflush(stdout);
-    write_note();
+    srand(time(NULL));
+    int canary = rand()%9+69;
+    printf("Before: %d\n", canary);
+    canary += 50*ptrace(PTRACE_TRACEME, 0, NULL, 0);
+    printf("After: %d\n", canary);
+    write_note(canary);
 
 /*
     char cmd[5];
@@ -100,8 +108,9 @@ static void read_note()
     printf("Note content: %s\n", content);
 }
 */
-static void write_note()
+static void write_note(int canary)
 {
+    int value = canary;
     unsigned note_id; char password[60], content[60];
 
     printf("Please type: note_id password content\n");
@@ -110,6 +119,10 @@ static void write_note()
     if (scanf("%u %50s %512s", &note_id, password, content) != 3) {
         string_out("Can't parse your stuff!\n");
         return;
+    }
+    if (canary != value) {
+        printf("%s","*** stack smashing detected ***: Program terminated\nAborted\n");
+        exit(200);
     }
 
     char filename[200];
