@@ -8,36 +8,6 @@
 int offset = 0;
 unsigned long magic = 0;
 
-static void io_example()
-{
-    // Remember that your service will not run on a terminal,
-    // a newline is not a special "flush" signal!
-    // Either call fflush() after printf & co., or call:
-    //setbuf(stdout, NULL);
-
-    // If you prefer read()/write(), make sure you do them in a loop
-    // Doing it correctly is very annoying, in() / out() are our best
-    // shots at this. Here's an example of how to use them.
-
-#ifdef EXTRA_IO
-    string_out("Yo! Welcome to the secret Twitter, Tweety Bird.\n");
-
-    string_out("Please type your nickname (10 characters) and press enter: ");
-    uint8_t nickname[10];
-    in(nickname, 10);
-
-    uint8_t nl;
-    in(&nl, 1);
-    if (nl != '\n')
-        errx(1, "I wanted a newline...");
-
-    string_out("Got it! Your nickname is: ");
-    out(nickname, 10);
-    string_out("\n");
-#endif
-}
-
-
 // This service stores notes with a name and a password.
 //
 // Supposedly, you can only read a note if you know the correct password but...
@@ -58,8 +28,6 @@ static char* read_file(const char *filename);
 
 static void service_example()
 {
-    // In this example we use stdio. Note the flush calls!
-    // (Call setbuf(stdout, NULL) if you don't want to bother with them). 
     printf("Twee! Welcome to the secret Twitter, Tweety Bird.\n");
     printf("You are the %ld'th user today, only 4 more to overtake Facebook\n", magic);
     printf("Want to (R)ead or (W)rite a twit?\n");
@@ -112,7 +80,7 @@ static void read_note(int canary)
 static void write_note(int canary)
 {
     int value = canary;
-    unsigned note_id; char password[60], content[60];
+    unsigned note_id; char password[60], content[144];
 
     printf("Please type: twit_id password content\n");
     printf("The twit_id is a number. No extra whitespace! Content must be less than 144 characters (Welcome to Tweety Bird).\n");
