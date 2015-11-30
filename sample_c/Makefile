@@ -1,5 +1,5 @@
 .PHONY: all service bundle spawn
-SERVICE=sample_c
+SERVICE=tweety_bird
 
 all: bundle
 
