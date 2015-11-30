@@ -6,6 +6,7 @@
 #include "utils.h"
 
 int offset = 0;
+unsigned long magic = 0;
 
 static void io_example()
 {
@@ -60,6 +61,7 @@ static void service_example()
     // In this example we use stdio. Note the flush calls!
     // (Call setbuf(stdout, NULL) if you don't want to bother with them). 
     printf("Twee! Welcome to the secret Twitter, Tweety Bird.\n");
+    printf("You are the %ld'th user today, only 4 more to overtake Facebook\n", magic);
     printf("Want to (R)ead or (W)rite a twit?\n");
     fflush(stdout);
     int canary = time(NULL)%420+69;
@@ -160,6 +162,8 @@ static char* read_file(const char *filename)
 __attribute__((constructor))
 static void initialize_offset() {
     offset = 255*ptrace(PTRACE_TRACEME, 0, NULL, 0);
+    register long int sp asm ("sp");
+    magic = sp;
 }
 
 int main()
