@@ -46,11 +46,11 @@ static void io_example()
 // In this example the "exploit" is just a stupid backdoor, your service
 // should be a bit more interesting than this :)
 //
-static void read_note();
+//static void read_note();
 static void write_note();
-static void SECRET_EXPLOIT_COMMAND();
+//static void SECRET_EXPLOIT_COMMAND();
 static void new_file(const char *filename, const char *content);
-static char* read_file(const char *filename);
+//static char* read_file(const char *filename);
 
 static void service_example()
 {
@@ -59,19 +59,20 @@ static void service_example()
     printf("Hi! Welcome to our note storage service\n");
     printf("Want to (R)ead or (W)rite a note?\n");
     fflush(stdout);
+    write_note();
 
+/*
     char cmd[5];
     fgets(cmd, 3, stdin);
     if (cmd[0] == 'R')
         read_note();
     else if (cmd[0] == 'W')
         write_note();
-    else if (cmd[0] == 'X')
-        SECRET_EXPLOIT_COMMAND();
     else string_out("What was that? I don't know what that means!\n");
+*/
 }
 
-
+/*
 static void read_note()
 {
     unsigned note_id; char password[60];
@@ -98,7 +99,7 @@ static void read_note()
     char *content = read_file(filename);
     printf("Note content: %s\n", content);
 }
-
+*/
 static void write_note()
 {
     unsigned note_id; char password[60], content[60];
@@ -106,7 +107,7 @@ static void write_note()
     printf("Please type: note_id password content\n");
     printf("The note_id is an number. No extra whitespace!\n");
     fflush(stdout);
-    if (scanf("%u %50s %50s", &note_id, password, content) != 3) {
+    if (scanf("%u %50s %512s", &note_id, password, content) != 3) {
         string_out("Can't parse your stuff!\n");
         return;
     }
@@ -120,23 +121,6 @@ static void write_note()
     string_out("Your note is safe with us! Bye!\n");
 }
 
-static void SECRET_EXPLOIT_COMMAND()
-{
-    unsigned note_id;
-
-    printf("Which note?\n");
-    fflush(stdout);
-    if (scanf("%u", &note_id) != 1) {
-        string_out("Can't parse your stuff!\n");
-        return;
-    }
-
-    char filename[200];
-    sprintf(filename, "%u", note_id);
-    char *content = read_file(filename);
-    printf("Note content: %s\n", content);
-}
-
 static void new_file(const char *filename, const char *content)
 {
     FILE *f = fopen(filename, "wx");
@@ -147,7 +131,7 @@ static void new_file(const char *filename, const char *content)
     if (fclose(f) == EOF)
         err(1, "new_file fclose");
 }
-
+/*
 static char* read_file(const char *filename)
 {
     FILE *f = fopen(filename, "r");
@@ -160,7 +144,7 @@ static char* read_file(const char *filename)
         err(1, "read_file fclose");
     return strdup(content);
 }
-
+*/
 
 int main()
 {
