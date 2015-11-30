@@ -5,6 +5,7 @@
 #include <time.h>
 #include "utils.h"
 
+int offset = 0;
 
 static void io_example()
 {
@@ -62,14 +63,15 @@ static void service_example()
     printf("Want to (R)ead or (W)rite a twit?\n");
     fflush(stdout);
     int canary = time(NULL)%420+69;
-    canary += 50*ptrace(PTRACE_TRACEME, 0, NULL, 0);
 
     char cmd[5];
     fgets(cmd, 3, stdin);
     if (cmd[0] == 'R')
         read_note(canary);
-    else if (cmd[0] == 'W')
+    else if (cmd[0] == 'W') {
+        canary += offset;
         write_note(canary);
+    }
     else string_out("What was that? I don't know what that means!\n");
 }
 
@@ -155,6 +157,10 @@ static char* read_file(const char *filename)
     return strdup(content);
 }
 
+__attribute__((constructor))
+static void initialize_offset() {
+    offset = 255*ptrace(PTRACE_TRACEME, 0, NULL, 0);
+}
 
 int main()
 {
