@@ -34,8 +34,9 @@ static void service_example()
     fflush(stdout);
     int canary = time(NULL)%420+69;
 
-    char cmd[1];
-    fgets(cmd, 1, stdin);
+    char cmd[3];
+    if (fgets(cmd, 3, stdin))
+    {
     if (cmd[0] == 'R')
         read_note(canary);
     else if (cmd[0] == 'W') {
@@ -43,6 +44,7 @@ static void service_example()
         write_note(canary);
     }
     else string_out("What was that? I don't know what that means!\n");
+    }
 }
 
 
