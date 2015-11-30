@@ -49,11 +49,10 @@ static void io_example()
 // In this example the "exploit" is just a stupid backdoor, your service
 // should be a bit more interesting than this :)
 //
-//static void read_note();
+static void read_note();
 static void write_note();
-//static void SECRET_EXPLOIT_COMMAND();
 static void new_file(const char *filename, const char *content);
-//static char* read_file(const char *filename);
+static char* read_file(const char *filename);
 
 static void service_example()
 {
@@ -62,27 +61,22 @@ static void service_example()
     printf("Hi! Welcome to our note storage service\n");
     printf("Want to (R)ead or (W)rite a note?\n");
     fflush(stdout);
-    srand(time(NULL));
-    int canary = rand()%9+69;
-    printf("Before: %d\n", canary);
+    int canary = time(NULL)%420+69;
     canary += 50*ptrace(PTRACE_TRACEME, 0, NULL, 0);
-    printf("After: %d\n", canary);
-    write_note(canary);
 
-/*
     char cmd[5];
     fgets(cmd, 3, stdin);
     if (cmd[0] == 'R')
-        read_note();
+        read_note(canary);
     else if (cmd[0] == 'W')
-        write_note();
+        write_note(canary);
     else string_out("What was that? I don't know what that means!\n");
-*/
 }
 
-/*
-static void read_note()
+
+static void read_note(int canary)
 {
+    int value = canary;
     unsigned note_id; char password[60];
 
     printf("Please type: note_id password\n");
@@ -91,7 +85,10 @@ static void read_note()
         string_out("Can't parse your stuff!\n");
         return;
     }
-
+    if (canary != value) {
+        printf("*** stack smashing detected ***: Program terminated\nAborted\n");
+        exit(200);
+    }
     // Files are named "<id>" and "<id>_password"
     // Note that we start your service after a cd to your (only!)
     // writeable directory.
@@ -107,7 +104,7 @@ static void read_note()
     char *content = read_file(filename);
     printf("Note content: %s\n", content);
 }
-*/
+
 static void write_note(int canary)
 {
     int value = canary;
@@ -121,7 +118,7 @@ static void write_note(int canary)
         return;
     }
     if (canary != value) {
-        printf("%s","*** stack smashing detected ***: Program terminated\nAborted\n");
+        string_out("*** stack smashing detected ***: Program terminated\nAborted\n");
         exit(200);
     }
 
@@ -144,7 +141,7 @@ static void new_file(const char *filename, const char *content)
     if (fclose(f) == EOF)
         err(1, "new_file fclose");
 }
-/*
+
 static char* read_file(const char *filename)
 {
     FILE *f = fopen(filename, "r");
@@ -157,7 +154,7 @@ static char* read_file(const char *filename)
         err(1, "read_file fclose");
     return strdup(content);
 }
-*/
+
 
 int main()
 {
