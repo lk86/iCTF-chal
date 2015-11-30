@@ -1,4 +1,4 @@
-Confused? Start by looking at these guys :)
+BUILDS iCTF Challenge
 
 Documents: http://ictf.cs.ucsb.edu/pages/the-2015-ictf.html
 
