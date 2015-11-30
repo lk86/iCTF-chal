@@ -19,13 +19,13 @@ def set_flag(ip, port, flag):
     conn = socket.create_connection((ip,port))
     c = pexpect.fdpexpect.fdspawn(conn.fileno())
 
-    c.expect("Hi! Welcome to our note storage service")
-    c.expect("Want to \(R\)ead or \(W\)rite a note?") # Note: these are RegExps!
+    c.expect("Twee! Welcome to the secret Twitter, Tweety Bird.")
+    c.expect("Want to \(R\)ead or \(W\)rite a twit?") # Note: these are RegExps!
 
     c.sendline("W")
 
-    c.expect("Please type: note_id password content")
-    c.expect("The note_id is an number. No extra whitespace!")
+    c.expect("Please type: twit_id password content")
+    c.expect("The twit_id is a number. No extra whitespace! Content must be less than 144 characters (Welcome to Tweety Bird).")
     c.sendline("{} {} {}".format(note_id, password, content))
 
     c.expect("Your note is safe with us! Bye!")
@@ -39,4 +39,4 @@ def set_flag(ip, port, flag):
 
 
 if __name__ == "__main__":
-    print set_flag("127.0.0.1", 6666, sys.argv[1] if len(sys.argv)>1 else "FLG1234567890")
+    print set_flag("127.0.0.1", 42069, sys.argv[1] if len(sys.argv)>1 else "FLG1234567890")

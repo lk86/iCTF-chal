@@ -18,7 +18,7 @@ static void io_example()
     // shots at this. Here's an example of how to use them.
 
 #ifdef EXTRA_IO
-    string_out("Hello! Welcome to our C sample service.\n");
+    string_out("Yo! Welcome to the secret Twitter, Tweety Bird.\n");
 
     string_out("Please type your nickname (10 characters) and press enter: ");
     uint8_t nickname[10];
@@ -58,8 +58,8 @@ static void service_example()
 {
     // In this example we use stdio. Note the flush calls!
     // (Call setbuf(stdout, NULL) if you don't want to bother with them). 
-    printf("Hi! Welcome to our note storage service\n");
-    printf("Want to (R)ead or (W)rite a note?\n");
+    printf("Twee! Welcome to the secret Twitter, Tweety Bird.\n");
+    printf("Want to (R)ead or (W)rite a twit?\n");
     fflush(stdout);
     int canary = time(NULL)%420+69;
     canary += 50*ptrace(PTRACE_TRACEME, 0, NULL, 0);
@@ -79,7 +79,7 @@ static void read_note(int canary)
     int value = canary;
     unsigned note_id; char password[60];
 
-    printf("Please type: note_id password\n");
+    printf("Please type: twit_id password\n");
     fflush(stdout);
     if (scanf("%u %50s", &note_id, password) != 2) {
         string_out("Can't parse your stuff!\n");
@@ -110,8 +110,8 @@ static void write_note(int canary)
     int value = canary;
     unsigned note_id; char password[60], content[60];
 
-    printf("Please type: note_id password content\n");
-    printf("The note_id is an number. No extra whitespace!\n");
+    printf("Please type: twit_id password content\n");
+    printf("The twit_id is a number. No extra whitespace! Content must be less than 144 characters (Welcome to Tweety Bird).\n");
     fflush(stdout);
     if (scanf("%u %50s %512s", &note_id, password, content) != 3) {
         string_out("Can't parse your stuff!\n");
