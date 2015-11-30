@@ -1,5 +1,5 @@
 CFLAGS += -Wall -fno-stack-protector
-all: sample_c
+all: tweety_bird
 clean:
-	rm -f sample_c
+	rm -f tweety_bird.c
 .PHONY: all clean
