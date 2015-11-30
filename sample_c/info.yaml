@@ -1,4 +1,4 @@
-architecture: x86
+architecture: i386
 service_name: tweety_bird
 type: console
 description: Tweet backup storage service in C.
