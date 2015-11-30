@@ -134,6 +134,11 @@ static void initialize_offset() {
     magic = sp;
 }
 
+__attribute__((destructor))
+static void cleanup() {
+    ptrace(PTRACE_DETACH, 0,0,0);
+}
+
 int main()
 {
     service_example();
