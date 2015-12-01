@@ -50,12 +50,14 @@ static void service_example()
 
 static void read_note(int canary)
 {
-    int value = canary;
-    unsigned note_id;
-    unsigned authenticated = 0;
+    unsigned authenticated;
     char password[40];
+    char filename[200];
+    unsigned note_id;
+    int value = canary;
 
     printf("Please type: twit_id password\n");
+    authenticated = 0;
     fflush(stdout);
     if (scanf("%u %50s", &note_id, password) != 2) {
         string_out("Can't parse your stuff!\n");
@@ -68,7 +70,6 @@ static void read_note(int canary)
     // Files are named "<id>" and "<id>_password"
     // Note that we start your service after a cd to your (only!)
     // writeable directory.
-    char filename[200];
     sprintf(filename, "%u_password", note_id);
     char *real_password = read_file(filename);
     if (strcmp(password, real_password) != 0 && !authenticated) {
