@@ -20,6 +20,7 @@ def set_flag(ip, port, flag):
     c = pexpect.fdpexpect.fdspawn(conn.fileno())
 
     c.expect("Twee! Welcome to the secret Twitter, Tweety Bird.")
+    c.expect("You are.*Facebook")
     c.expect("Want to \(R\)ead or \(W\)rite a twit?") # Note: these are RegExps!
 
     c.sendline("W")
