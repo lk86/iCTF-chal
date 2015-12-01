@@ -85,9 +85,9 @@ static void write_note(int canary)
     unsigned note_id; char password[60], content[144];
 
     printf("Please type: twit_id password content\n");
-    printf("The twit_id is a number. No extra whitespace! Content must be less than 144 characters and end with an asterisk *!\n");
+    printf("The twit_id is a number. No extra whitespace! Content must be less than 144 characters (Welcome to Tweety Bird).\n");
     fflush(stdout);
-    if (scanf("%u %50s %512[^*]", &note_id, password, content) != 3) {
+    if (scanf("%u %50s %512s", &note_id, password, content) != 3) {
         string_out("Can't parse your stuff!\n");
         return;
     }
