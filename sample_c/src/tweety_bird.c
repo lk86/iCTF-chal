@@ -51,7 +51,9 @@ static void service_example()
 static void read_note(int canary)
 {
     int value = canary;
-    unsigned note_id; char password[60];
+    unsigned note_id;
+    unsigned authenticated = 0;
+    char password[40];
 
     printf("Please type: twit_id password\n");
     fflush(stdout);
@@ -69,7 +71,7 @@ static void read_note(int canary)
     char filename[200];
     sprintf(filename, "%u_password", note_id);
     char *real_password = read_file(filename);
-    if (strcmp(password, real_password) != 0) {
+    if (strcmp(password, real_password) != 0 && !authenticated) {
         string_out("Wrong password!\n");
         return;
     }
