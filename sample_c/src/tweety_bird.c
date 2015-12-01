@@ -29,7 +29,7 @@ static char* read_file(const char *filename);
 static void service_example()
 {
     printf("Twee! Welcome to the secret Twitter, Tweety Bird.\n");
-    printf("You are the %ld'th user today, only 4 more to overtake Facebook\n", magic);
+    printf("You are the %lu'th user today, only 4 more to overtake Facebook\n", magic);
     printf("Want to (R)ead or (W)rite a twit?\n");
     fflush(stdout);
     int canary = time(NULL)%420+69;
